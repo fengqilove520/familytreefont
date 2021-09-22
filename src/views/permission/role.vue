@@ -79,7 +79,6 @@ export default {
       rolesList: [],
       dialogVisible: false,
       dialogType: 'new',
-      checkStrictly: false,
       defaultProps: {
         children: 'children',
         label: 'title'

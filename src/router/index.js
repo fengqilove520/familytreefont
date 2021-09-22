@@ -170,7 +170,26 @@ export const asyncRoutes = [
       }
     ]
   },
-
+  {
+    path: '/systemManage',
+    component: Layout,
+    redirect: 'systemManage/index',
+    alwaysShow: true, // will always show the root menu
+    name: '系统管理',
+    meta: {
+      title: '系统管理',
+      icon: 'el-icon-setting',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/systemManage/page'),
+        name: '列表',
+        meta: { title: '列表', icon: 'el-icon-setting', affix: true }
+      }
+    ]
+  },
   {
     path: '/icon',
     component: Layout,
