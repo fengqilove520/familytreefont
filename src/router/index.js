@@ -91,7 +91,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+        meta: { title: 'Documentation', icon: 'documentation'}
       }
     ]
   },
@@ -185,8 +185,8 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/systemManage/page'),
-        name: '列表',
-        meta: { title: '列表', icon: 'el-icon-setting', affix: true }
+        name: '字典列表',
+        meta: { title: '字典列表', icon: 'list' }
       }
     ]
   },

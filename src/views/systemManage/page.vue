@@ -86,14 +86,14 @@
           <el-input v-model="dict.orders" placeholder="排序" />
         </el-form-item>
         <el-form-item label="字典父类型">
-          <el-select  class="filter-item" filterable clearable v-model="dictQueryParam.parType" placeholder="请选择" >
+          <el-select  class="filter-item" filterable clearable v-model="dict.parType" placeholder="请选择" @change="onSelectedType($event)">
             <el-option v-for="item in typeOptions"  :key="item.type" :label="item.typeName" :value="item.type">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="字典父编码">
-          <el-select  class="filter-item" filterable clearable v-model="dictQueryParam.parCode" placeholder="请选择" >
-            <el-option v-for="item in parTypeOptions"  :key="item.code" :label="item.name" :value="item.code">
+        <el-form-item label="父字典值">
+          <el-select  class="filter-item" filterable clearable v-model="dict.parCode" placeholder="请选择">
+            <el-option v-for="item in parCodeOptions"  :key="item.code" :label="item.name" :value="item.code">
             </el-option>
           </el-select>
         </el-form-item>
@@ -107,14 +107,14 @@
 </template>
 
 <script>
-import { getRoles, getTypeOptions, save, del } from '@/api/dict'
+import { getRoles, getTypeOptions, save, del, getCodeListByType } from '@/api/dict'
 
 export default {
   data() {
     return {
       dict: {},
       typeOptions: [],
-      parTypeOptions: [],
+      parCodeOptions: [],
       routes: [],
       pageInfo: {
         'pageNum': 1,
@@ -180,7 +180,13 @@ export default {
       this.getDicts(Object.assign(this.pageInfo, this.dictQueryParam))
     },
     resetData() {
-
+      this.dictQueryParam = {}
+      this.getList()
+    },
+    onSelectedType(data) {
+      getCodeListByType({ 'type': data }).then(res => {
+        this.parCodeOptions = res.data
+      })
     }
   }
 }

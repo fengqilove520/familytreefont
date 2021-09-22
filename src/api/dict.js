@@ -30,3 +30,12 @@ export function del(data) {
     data: data
   })
 }
+
+export function getCodeListByType(data) {
+  return request({
+    url: '/api/dict/getCodeList',
+    method: 'post',
+    data: data
+  })
+}
+
