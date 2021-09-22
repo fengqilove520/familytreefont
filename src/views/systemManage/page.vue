@@ -127,6 +127,9 @@ export default {
       defaultProps: {
         children: 'children',
         label: 'title'
+      },
+      addRequiredRule: {
+
       }
     }
   },
