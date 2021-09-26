@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getRoles(data) {
+export function getPage(data) {
   return request({
     url: '/api/dict/getPage',
     method: 'post',
