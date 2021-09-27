@@ -3,9 +3,8 @@
     <!-- 查询条件 -->
     <el-form :inline="true" :model="dictQueryParam">
       <el-form-item label="字典类型:">
-        <el-select  class="filter-item" filterable clearable v-model="dictQueryParam.type" placeholder="请选择" >
-          <el-option v-for="item in typeOptions"  :key="item.type" :label="item.typeName" :value="item.type">
-          </el-option>
+        <el-select v-model="dictQueryParam.type" class="filter-item" filterable clearable placeholder="请选择">
+          <el-option v-for="item in typeOptions" :key="item.type" :label="item.typeName" :value="item.type" />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -58,13 +57,13 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
       :current-page="pageInfo.pageNum"
       :page-size="pageInfo.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="pageInfo.total">
-    </el-pagination>
+      :total="pageInfo.total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑':'新增'">
       <el-form :model="dict" label-width="120px" label-position="right">
         <el-form-item label="值">
@@ -86,15 +85,13 @@
           <el-input v-model="dict.orders" placeholder="排序" />
         </el-form-item>
         <el-form-item label="字典父类型">
-          <el-select  class="filter-item" filterable clearable v-model="dict.parType" placeholder="请选择" @change="onSelectedType($event)">
-            <el-option v-for="item in typeOptions"  :key="item.type" :label="item.typeName" :value="item.type">
-            </el-option>
+          <el-select v-model="dict.parType" class="filter-item" filterable clearable placeholder="请选择" @change="onSelectedType($event)">
+            <el-option v-for="item in typeOptions" :key="item.type" :label="item.typeName" :value="item.type" />
           </el-select>
         </el-form-item>
         <el-form-item label="父字典值">
-          <el-select  class="filter-item" filterable clearable v-model="dict.parCode" placeholder="请选择">
-            <el-option v-for="item in parCodeOptions"  :key="item.code" :label="item.name" :value="item.code">
-            </el-option>
+          <el-select v-model="dict.parCode" class="filter-item" filterable clearable placeholder="请选择">
+            <el-option v-for="item in parCodeOptions" :key="item.code" :label="item.name" :value="item.code" />
           </el-select>
         </el-form-item>
       </el-form>

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 查询条件 -->
-    <el-form :inline="true" :model="dictQueryParam">
+    <el-form :inline="true" :model="queryParam">
       <el-form-item label="名称:">
         <el-input v-model="person.name" placeholder="名称" />
       </el-form-item>
@@ -32,12 +32,12 @@
           {{ scope.row.residentialAddress }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="出生时间" width="80">
+      <el-table-column align="center" label="出生时间" width="160">
         <template slot-scope="scope">
           {{ scope.row.birthTime }}
         </template>
       </el-table-column>
-      <el-table-column align="header-center" label="死亡时间" width="120">
+      <el-table-column align="header-center" label="死亡时间" width="160">
         <template slot-scope="scope">
           {{ scope.row.deathTime }}
         </template>
@@ -50,20 +50,22 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
       :current-page="pageInfo.pageNum"
       :page-size="pageInfo.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="pageInfo.total">
-    </el-pagination>
+      :total="pageInfo.total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑':'新增'">
-      <el-form :model="dict" label-width="120px" label-position="right">
+      <el-form :model="person" label-width="120px" label-position="right">
         <el-form-item label="姓名">
           <el-input v-model="person.name" placeholder="姓名" />
         </el-form-item>
         <el-form-item label="性别">
-          <el-input v-model="person.sex" placeholder="性别" />
+          <el-select v-model="person.sex" class="filter-item" filterable clearable placeholder="请选择">
+            <el-option v-for="item in sexOptions" :key="item.code" :label="item.name" :value="+item.code" />
+          </el-select>
         </el-form-item>
         <el-form-item label="户籍地址">
           <el-input v-model="person.domicilePlace" placeholder="户籍地址" />
@@ -72,15 +74,26 @@
           <el-input v-model="person.residentialAddress" placeholder="居住地址" />
         </el-form-item>
         <el-form-item label="出生时间">
-          <el-input v-model="person.birthTime" placeholder="出生时间" />
+          <el-date-picker
+            v-model="person.birthTime"
+            type="datetime"
+            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="选择日期时间"
+          />
         </el-form-item>
         <el-form-item label="死亡时间">
-          <el-input v-model="person.deathTime" placeholder="死亡时间" />
+          <el-date-picker
+            v-model="person.deathTime"
+            type="datetime"
+            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="选择日期时间"
+          />
         </el-form-item>
         <el-form-item label="父亲">
-          <el-select  class="filter-item" filterable clearable v-model="person.pid" placeholder="请选择" @change="onSelectedType($event)">
-            <el-option v-for="item in typeOptions"  :key="item.type" :label="item.typeName" :value="item.type">
-            </el-option>
+          <el-select v-model="person.pid" class="filter-item" filterable clearable placeholder="请选择">
+            <el-option v-for="item in parentOptions" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -93,30 +106,23 @@
 </template>
 
 <script>
-import { getPage, save, del } from '@/api/person'
+import { getPage, save, del, getParents } from '@/api/person'
+import { getCodeListByType } from '@/api/dict'
 
 export default {
   data() {
     return {
       person: {},
-      typeOptions: [],
-      parCodeOptions: [],
-      routes: [],
+      parentOptions: [],
+      sexOptions: [],
       pageInfo: {
         'pageNum': 1,
         'pageSize': 10
       },
-      dictQueryParam: {},
+      queryParam: {},
       dialogVisible: false,
       dialogType: 'add',
-      checkStrictly: false,
-      defaultProps: {
-        children: 'children',
-        label: 'title'
-      },
-      addRequiredRule: {
-
-      }
+      checkStrictly: false
     }
   },
   computed: {
@@ -132,7 +138,7 @@ export default {
     handleSizeChange(size) {
       this.pageInfo.pageSize = size
       // 切换显示条数
-      this.getPage(Object.assign(this.pageInfo, this.dictQueryParam))
+      this.getPage(Object.assign(this.pageInfo, this.queryParam))
     },
     handleCurrentChange(pageNum) {
       // 切换页面
@@ -144,11 +150,15 @@ export default {
       this.person = {}
       this.dialogVisible = true
       this.dialogType = 'add'
+      this.getParents()
+      this.getSexes()
     },
     handleEdit(data) {
       this.person = data
       this.dialogVisible = true
       this.dialogType = 'edit'
+      this.getParents()
+      this.getSexes()
     },
     commitEdit() {
       save(this.person)
@@ -157,13 +167,24 @@ export default {
     },
     handleDelete(data) {
       del(data.row)
+      this.getList()
     },
     getList() {
-      this.getPage(Object.assign(this.pageInfo, this.dictQueryParam))
+      this.getPage(Object.assign(this.pageInfo, this.queryParam))
     },
     resetData() {
       this.dictQueryParam = {}
       this.getList()
+    },
+    async getParents() {
+      const data = { sex: 1 }
+      const res = await getParents(data)
+      this.parentOptions = res.data
+    },
+    async getSexes() {
+      const data = { type: 'sex' }
+      const res = await getCodeListByType(data)
+      this.sexOptions = res.data
     }
   }
 }

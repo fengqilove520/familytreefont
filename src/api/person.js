@@ -24,3 +24,18 @@ export function del(data) {
   })
 }
 
+export function getParents(data) {
+  return request({
+    url: '/api/person/getList',
+    method: 'post',
+    data
+  })
+}
+
+export function getTree(data) {
+  return request({
+    url: '/api/person/getTree',
+    method: 'post',
+    data
+  })
+}

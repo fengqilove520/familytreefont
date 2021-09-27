@@ -121,6 +121,12 @@ export const asyncRoutes = [
         component: () => import('@/views/personManage/page'),
         name: '人员列表',
         meta: { title: '人员列表', icon: 'list' }
+      },
+      {
+        path: 'tree',
+        component: () => import('@/views/personManage/tree'),
+        name: '关系树',
+        meta: { title: '关系树', icon: 'list' }
       }
     ]
   },
