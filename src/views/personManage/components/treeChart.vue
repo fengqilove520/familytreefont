@@ -12,7 +12,7 @@
             @click="$emit('click-node', treeData)"
           >
             <div class="avat">
-              <img :src="treeData.image_url">
+              <img :src="treeData.imageUrl">
             </div>
             <div class="name">{{ treeData.name }}</div>
           </div>
@@ -25,7 +25,7 @@
               @click="$emit('click-node', mate)"
             >
               <div class="avat">
-                <img :src="mate.image_url">
+                <img :src="mate.imageUrl">
               </div>
               <div class="name">{{ mate.name }}</div>
             </div>
