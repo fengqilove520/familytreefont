@@ -63,7 +63,7 @@
           <el-input v-model="person.name" placeholder="姓名" />
         </el-form-item>
         <el-form-item label="性别">
-          <el-select v-model="person.sex" class="filter-item" filterable clearable placeholder="请选择">
+          <el-select v-model="person.sex" class="filter-item" filterable clearable placeholder="请选择" @change="getMateOptions">
             <el-option v-for="item in sexOptions" :key="item.code" :label="item.name" :value="+item.code" />
           </el-select>
         </el-form-item>
@@ -91,6 +91,11 @@
             placeholder="选择日期时间"
           />
         </el-form-item>
+        <el-form-item label="配偶">
+          <el-select v-model="person.mateId" class="filter-item" filterable clearable placeholder="请选择">
+            <el-option v-for="item in mateOptions" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="父亲">
           <el-select v-model="person.pid" class="filter-item" filterable clearable placeholder="请选择">
             <el-option v-for="item in parentOptions" :key="item.id" :label="item.name" :value="item.id" />
@@ -106,7 +111,7 @@
 </template>
 
 <script>
-import { getPage, save, del, getParents } from '@/api/person'
+import { getPage, save, del, getList } from '@/api/person'
 import { getCodeListByType } from '@/api/dict'
 
 export default {
@@ -114,6 +119,7 @@ export default {
     return {
       person: {},
       parentOptions: [],
+      mateOptions: [],
       sexOptions: [],
       pageInfo: {
         'pageNum': 1,
@@ -150,14 +156,15 @@ export default {
       this.person = {}
       this.dialogVisible = true
       this.dialogType = 'add'
-      this.getParents()
+      this.getParentOptions()
       this.getSexes()
     },
     handleEdit(data) {
       this.person = data
       this.dialogVisible = true
       this.dialogType = 'edit'
-      this.getParents()
+      this.getParentOptions()
+      this.getMateOptions(this.person.sex)
       this.getSexes()
     },
     commitEdit() {
@@ -176,10 +183,17 @@ export default {
       this.dictQueryParam = {}
       this.getList()
     },
-    async getParents() {
+    async getParentOptions() {
       const data = { sex: 1 }
-      const res = await getParents(data)
+      const res = await getList(data)
       this.parentOptions = res.data
+    },
+    async getMateOptions(param) {
+      console.log(param)
+      debugger
+      const data = { sex: this.person.sex === 0 ? 1 : 0 }
+      const res = await getList(data)
+      this.mateOptions = res.data
     },
     async getSexes() {
       const data = { type: 'sex' }

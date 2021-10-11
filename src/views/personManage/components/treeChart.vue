@@ -103,14 +103,4 @@ transform: rotateZ(135deg);transform-origin: 50% 50% 0;transition: transform eas
 .node .person .avat img{width:100%;height: 100%;}
 .node .person .name{height:2em;line-height: 2em;overflow: hidden;width:100%;}
 .node.hasMate::after{content: "";position: absolute;left:2em;right:2em;top:2em;border-top:2px solid #ccc;z-index: 1;}
-/* 横板 */
-.landscape{transform:translate(-100%,0) rotate(-90deg);transform-origin: 100% 0;}
-.landscape .node{text-align: left;height: 8em;width:8em;}
-.landscape .person{position: relative; transform: rotate(90deg);padding-left: 4.5em;height: 4em;top:4em;left: -1em;}
-.landscape .person .avat{position: absolute;left: 0;}
-.landscape .person .name{height: 4em; line-height: 4em;}
-.landscape .hasMate{position: relative;}
-.landscape .hasMate .person{position: absolute; }
-.landscape .hasMate .person:first-child{left:auto; right:-4em;}
-.landscape .hasMate .person:last-child{left: -4em;margin-left:0;}
 </style>

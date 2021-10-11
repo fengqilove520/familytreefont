@@ -24,7 +24,7 @@ export function del(data) {
   })
 }
 
-export function getParents(data) {
+export function getList(data) {
   return request({
     url: '/api/person/getList',
     method: 'post',

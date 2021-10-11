@@ -1,9 +1,5 @@
 <template>
   <div class="app-container">
-    <label>
-      切换为横向
-      <input v-model="landscape" type="checkbox" value="1">
-    </label>
     <treeChart :json="personTree" :class="{landscape: landscape.length}" @click-node="clickNode" />
   </div>
 </template>
