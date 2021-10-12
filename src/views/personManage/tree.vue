@@ -18,42 +18,7 @@ export default {
     return {
       landscape: [],
       personTree: {},
-      queryParam: {},
-      data: {
-        name: 'root',
-        image_url: 'https://static.refined-x.com/static/avatar.jpg',
-        class: ['rootNode'],
-        children: [
-          {
-            name: 'children1',
-            image_url: 'https://static.refined-x.com/static/avatar.jpg'
-          },
-          {
-            name: 'children2',
-            image_url: 'https://static.refined-x.com/static/avatar.jpg',
-            mate: [
-              {
-                name: 'mate',
-                image_url: 'https://static.refined-x.com/static/avatar.jpg'
-              }
-            ],
-            children: [
-              {
-                name: 'grandchild',
-                image_url: 'https://static.refined-x.com/static/avatar.jpg'
-              },
-              {
-                name: 'grandchild2',
-                image_url: 'https://static.refined-x.com/static/avatar.jpg'
-              },
-              {
-                name: 'grandchild3',
-                image_url: 'https://static.refined-x.com/static/avatar.jpg'
-              }
-            ]
-          }
-        ]
-      }
+      queryParam: {}
     }
   },
   created() {

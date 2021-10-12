@@ -97,10 +97,16 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'index',
+        path: 'dictIndex',
         component: () => import('@/views/systemManage/page'),
         name: '字典列表',
         meta: { title: '字典列表', icon: 'list' }
+      },
+      {
+        path: 'userIndex',
+        component: () => import('@/views/userManage/index'),
+        name: '用户列表',
+        meta: { title: '用户列表', icon: 'list' }
       }
     ]
   },

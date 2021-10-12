@@ -22,3 +22,27 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getPage(data) {
+  return request({
+    url: '/api/user/getPage',
+    method: 'post',
+    data
+  })
+}
+
+export function save(data) {
+  return request({
+    url: '/api/user/save',
+    method: 'post',
+    data
+  })
+}
+
+export function del(data) {
+  return request({
+    url: '/api/user/delete',
+    method: 'post',
+    data
+  })
+}
