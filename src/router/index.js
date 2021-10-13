@@ -93,7 +93,7 @@ export const asyncRoutes = [
     meta: {
       title: '系统管理',
       icon: 'el-icon-setting',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin'] // you can set roles in root nav
     },
     children: [
       {
@@ -113,6 +113,12 @@ export const asyncRoutes = [
         component: () => import('@/views/menuManage/index'),
         name: '菜单列表',
         meta: { title: '菜单列表', icon: 'list' }
+      },
+      {
+        path: 'roleIndex',
+        component: () => import('@/views/roleManage/index'),
+        name: '角色列表',
+        meta: { title: '角色列表', icon: 'list' }
       }
     ]
   },
@@ -121,18 +127,18 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'personManage/index',
     alwaysShow: true, // will always show the root menu
-    name: '族谱管理',
+    name: '人员管理',
     meta: {
       title: '人员管理',
-      icon: 'peoples',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      icon: 'peoples' // you can set roles in root nav
     },
     children: [
       {
         path: 'index',
         component: () => import('@/views/personManage/page'),
         name: '人员列表',
-        meta: { title: '人员列表', icon: 'list' }
+        meta: { title: '人员列表', icon: 'list' },
+        roles: ['admin']
       },
       {
         path: 'tree',
