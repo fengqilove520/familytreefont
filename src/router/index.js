@@ -107,6 +107,12 @@ export const asyncRoutes = [
         component: () => import('@/views/userManage/index'),
         name: '用户列表',
         meta: { title: '用户列表', icon: 'list' }
+      },
+      {
+        path: 'menuIndex',
+        component: () => import('@/views/menuManage/index'),
+        name: '菜单列表',
+        meta: { title: '菜单列表', icon: 'list' }
       }
     ]
   },
@@ -115,7 +121,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'personManage/index',
     alwaysShow: true, // will always show the root menu
-    name: '人员管理',
+    name: '族谱管理',
     meta: {
       title: '人员管理',
       icon: 'peoples',
