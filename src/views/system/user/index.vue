@@ -12,17 +12,17 @@
     </el-form>
     <el-button type="primary" @click="handleAdd">新增</el-button>
     <el-table :data="pageInfo.list" style="width: 100%;margin-top:30px;" border>
-      <el-table-column align="center" label="用户名" width="120">
+      <el-table-column align="center" label="用户名" width="80">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用户姓名" width="120">
+      <el-table-column align="center" label="用户姓名" width="100">
         <template slot-scope="scope">
           {{ scope.row.fullName }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="用户类型" width="120">
+      <el-table-column align="center" label="用户类型" width="100">
         <template slot-scope="scope">
           {{ scope.row.typeValue }}
         </template>
@@ -32,17 +32,17 @@
           {{ scope.row.sexValue }}
         </template>
       </el-table-column>
-      <el-table-column align="header-center" label="身份证号" width="200">
+      <el-table-column align="header-center" label="身份证号" width="180">
         <template slot-scope="scope">
           {{ scope.row.card }}
         </template>
       </el-table-column>
-      <el-table-column align="header-center" label="手机号" width="100">
+      <el-table-column align="header-center" label="手机号" width="120">
         <template slot-scope="scope">
           {{ scope.row.phone }}
         </template>
       </el-table-column>
-      <el-table-column align="header-center" label="电子邮件" width="100">
+      <el-table-column align="header-center" label="电子邮件" width="200">
         <template slot-scope="scope">
           {{ scope.row.email }}
         </template>
@@ -50,7 +50,8 @@
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)" v-if="scope.row.type !== 0">删除</el-button>
+          <el-button type="danger" size="small" @click="handleDelete(scope.row)" v-if="scope.row.type !== 0">删除</el-button>
+          <el-button type="primary" size="small" @click="handleAuthorization(scope.row)">授权</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -101,6 +102,31 @@
         <el-button type="primary" @click="commitEdit">提交</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog :visible.sync="authDialogVisible">
+      <el-tabs  @tab-click="handleAuthClick">
+        <el-tab-pane label="授权菜单" name="menu">
+          <el-tree
+            :data="menus"
+            show-checkbox
+            node-key="id"
+            :default-expanded-keys="[2, 3]"
+            :default-checked-keys="[5]"
+            :props="defaultProps">
+          </el-tree>
+        </el-tab-pane>
+        <el-tab-pane label="授权角色" name="role">
+          <el-tree
+            :data="roles"
+            show-checkbox
+            node-key="id"
+            :default-expanded-keys="[2, 3]"
+            :default-checked-keys="[5]"
+            :props="defaultProps">
+          </el-tree>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
   </div>
 </template>
 
@@ -120,8 +146,16 @@ export default {
       },
       queryParam: {},
       dialogVisible: false,
+      authDialogVisible: false,
       dialogType: 'add',
       addRequiredRule: {
+      },
+      activeName: 'menu',
+      roles: [],
+      menus: [],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
       }
     }
   },
@@ -164,14 +198,25 @@ export default {
       this.dialogVisible = true
       this.dialogType = 'edit'
     },
+    handleAuthClick(data) {
+      console.info(data)
+      if (data.paneName === 'menu') {
+        this.loadUserMenus()
+      } else {
+        this.loadUserRoles()
+      }
+    },
     commitEdit() {
       save(this.user)
       this.dialogVisible = false
       this.getList()
     },
     handleDelete(data) {
-      del(data.row)
+      del(data)
       this.getList()
+    },
+    handleAuthorization(data) {
+      this.authDialogVisible = true
     },
     getList() {
       this.getUsers(Object.assign(this.pageInfo, this.queryParam))
@@ -183,6 +228,12 @@ export default {
     async getSexOptions() {
       const res = await getCodeListByType({ type: 'sex' })
       this.sexOptions = res.data
+    },
+    loadUserMenus() {
+
+    },
+    loadUserRoles() {
+
     }
   }
 }

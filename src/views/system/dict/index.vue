@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <!-- 查询条件 -->
-    <el-form :inline="true" :model="dictQueryParam">
+    <el-form :inline="true" :model="queryParam">
       <el-form-item label="字典类型:">
-        <el-select v-model="dictQueryParam.type" class="filter-item" filterable clearable placeholder="请选择">
+        <el-select v-model="queryParam.type" class="filter-item" filterable clearable placeholder="请选择">
           <el-option v-for="item in typeOptions" :key="item.type" :label="item.typeName" :value="item.type" />
         </el-select>
       </el-form-item>
@@ -117,7 +117,7 @@ export default {
         'pageNum': 1,
         'pageSize': 10
       },
-      dictQueryParam: {},
+      queryParam: {},
       dialogVisible: false,
       dialogType: 'add',
       checkStrictly: false,
@@ -144,7 +144,7 @@ export default {
     handleSizeChange(size) {
       this.pageInfo.pageSize = size
       // 切换显示条数
-      this.getDicts(Object.assign(this.pageInfo, this.dictQueryParam))
+      this.getDicts(Object.assign(this.pageInfo, this.queryParam))
     },
     async getTypeOptions() {
       const res = await getTypeOptions()
@@ -177,10 +177,10 @@ export default {
       del(data.row.id)
     },
     getList() {
-      this.getDicts(Object.assign(this.pageInfo, this.dictQueryParam))
+      this.getDicts(Object.assign(this.pageInfo, this.queryParam))
     },
     resetData() {
-      this.dictQueryParam = {}
+      this.queryParam = {}
       this.getList()
     },
     onSelectedType(data) {

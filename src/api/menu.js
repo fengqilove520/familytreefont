@@ -8,6 +8,14 @@ export function getPage(data) {
   })
 }
 
+export function getList(data) {
+  return request({
+    url: '/api/menu/getList',
+    method: 'post',
+    data
+  })
+}
+
 export function save(data) {
   return request({
     url: '/api/menu/save',

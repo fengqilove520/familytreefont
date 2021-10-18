@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/api/login/login',
+    url: '/api/login/igAuth/login',
     method: 'post',
     data
   })

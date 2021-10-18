@@ -84,13 +84,17 @@
           <el-input v-model="menu.desc" placeholder="描述" />
         </el-form-item>
         <el-form-item label="类型">
-          <el-input v-model="menu.type" placeholder="类型" />
+            <el-select v-model="menu.type" class="filter-item" filterable clearable placeholder="请选择">
+              <el-option v-for="item in typeOptions" :key="item.code" :label="item.name" :value="+item.code" />
+            </el-select>
         </el-form-item>
         <el-form-item label="连接">
           <el-input v-model="menu.url" placeholder="连接" />
         </el-form-item>
         <el-form-item label="父菜单">
-          <el-input v-model="menu.pid" placeholder="父菜单" />
+          <el-select v-model="menu.pid" class="filter-item" filterable clearable placeholder="请选择">
+            <el-option v-for="item in parentOptions" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
         </el-form-item>
         <el-form-item label="路径">
           <el-input v-model="menu.path" placeholder="路径" />
@@ -111,7 +115,7 @@
 </template>
 
 <script>
-import { getPage, save, del } from '@/api/menu'
+import { getPage, save, del, getList } from '@/api/menu'
 import { getCodeListByType } from '@/api/dict'
 
 export default {
@@ -119,7 +123,7 @@ export default {
     return {
       menu: {},
       typeOptions: [],
-      sexOptions: [],
+      parentOptions: [],
       routes: [],
       pageInfo: {
         'pageNum': 1,
@@ -153,8 +157,12 @@ export default {
       this.getMenus(Object.assign(this.pageInfo, this.queryParam))
     },
     async getTypeOptions() {
-      const res = await getCodeListByType({ type: 'user_type' })
+      const res = await getCodeListByType({ type: 'menu_type' })
       this.typeOptions = res.data
+    },
+    async getParentOptions() {
+      const res = await getList({})
+      this.parentOptions = res.data
     },
     handleCurrentChange(pageNum) {
       // 切换页面
@@ -164,11 +172,15 @@ export default {
     },
     handleAdd() {
       this.menu = {}
+      this.parentOptions = this.getParentOptions()
+      this.typeOptions = this.getTypeOptions()
       this.dialogVisible = true
       this.dialogType = 'add'
     },
     handleEdit(data) {
       this.menu = data
+      this.parentOptions = this.getParentOptions()
+      this.typeOptions = this.getTypeOptions()
       this.dialogVisible = true
       this.dialogType = 'edit'
     },
@@ -187,10 +199,6 @@ export default {
     resetData() {
       this.queryParam = {}
       this.getList()
-    },
-    async getSexOptions() {
-      const res = await getCodeListByType({ type: 'sex' })
-      this.sexOptions = res.data
     }
   }
 }
