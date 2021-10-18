@@ -85,9 +85,9 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/systemManage',
+    path: '/system',
     component: Layout,
-    redirect: 'systemManage/index',
+    redirect: 'system/index',
     alwaysShow: true, // will always show the root menu
     name: '系统管理',
     meta: {
@@ -97,28 +97,28 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'dictIndex',
-        component: () => import('@/views/systemManage/page'),
-        name: '字典列表',
-        meta: { title: '字典列表', icon: 'list' }
-      },
-      {
-        path: 'userIndex',
-        component: () => import('@/views/userManage/index'),
+        path: 'user',
+        component: () => import('@/views/system/user/index'),
         name: '用户列表',
         meta: { title: '用户列表', icon: 'list' }
       },
       {
-        path: 'menuIndex',
-        component: () => import('@/views/menuManage/index'),
+        path: 'menu',
+        component: () => import('@/views/system/menu/index'),
         name: '菜单列表',
         meta: { title: '菜单列表', icon: 'list' }
       },
       {
-        path: 'roleIndex',
-        component: () => import('@/views/roleManage/index'),
+        path: 'role',
+        component: () => import('@/views/system/role/index'),
         name: '角色列表',
         meta: { title: '角色列表', icon: 'list' }
+      },
+      {
+        path: 'dict',
+        component: () => import('@/views/system/dict/index'),
+        name: '字典列表',
+        meta: { title: '字典列表', icon: 'list' }
       }
     ]
   },

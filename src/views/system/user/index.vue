@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <!-- 查询条件 -->
-    <el-form :inline="true" :model="userQueryParam">
+    <el-form :inline="true" :model="queryParam">
       <el-form-item label="用户姓名">
-        <el-input v-model="userQueryParam.fullName" placeholder="用户姓名" />
+        <el-input v-model="queryParam.fullName" placeholder="用户姓名" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="getList">查询</el-button>
@@ -114,19 +114,13 @@ export default {
       user: {},
       typeOptions: [],
       sexOptions: [],
-      routes: [],
       pageInfo: {
         'pageNum': 1,
         'pageSize': 10
       },
-      userQueryParam: {},
+      queryParam: {},
       dialogVisible: false,
       dialogType: 'add',
-      checkStrictly: false,
-      defaultProps: {
-        children: 'children',
-        label: 'title'
-      },
       addRequiredRule: {
       }
     }
@@ -144,7 +138,7 @@ export default {
     handleSizeChange(size) {
       this.pageInfo.pageSize = size
       // 切换显示条数
-      this.getUsers(Object.assign(this.pageInfo, this.userQueryParam))
+      this.getUsers(Object.assign(this.pageInfo, this.queryParam))
     },
     async getTypeOptions() {
       const res = await getCodeListByType({ type: 'user_type' })
@@ -180,10 +174,10 @@ export default {
       this.getList()
     },
     getList() {
-      this.getUsers(Object.assign(this.pageInfo, this.userQueryParam))
+      this.getUsers(Object.assign(this.pageInfo, this.queryParam))
     },
     resetData() {
-      this.userQueryParam = {}
+      this.queryParam = {}
       this.getList()
     },
     async getSexOptions() {
