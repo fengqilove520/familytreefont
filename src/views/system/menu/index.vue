@@ -29,7 +29,7 @@
       </el-table-column>
       <el-table-column align="header-center" label="类型" width="60">
         <template slot-scope="scope">
-          {{ scope.row.type }}
+          {{ scope.row.typeValue }}
         </template>
       </el-table-column>
       <el-table-column align="header-center" label="连接" width="200">

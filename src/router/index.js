@@ -63,7 +63,14 @@ export const constantRoutes = [
     path: '/401',
     component: () => import('@/views/error-page/401'),
     hidden: true
-  },
+  }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
   {
     path: '/',
     component: Layout,
@@ -76,14 +83,7 @@ export const constantRoutes = [
         meta: { title: '仪表盘', icon: 'dashboard', affix: true }
       }
     ]
-  }
-]
-
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = [
+  },
   {
     path: '/system',
     component: Layout,
@@ -92,8 +92,7 @@ export const asyncRoutes = [
     name: '系统管理',
     meta: {
       title: '系统管理',
-      icon: 'el-icon-setting',
-      roles: ['admin'] // you can set roles in root nav
+      icon: 'el-icon-setting'
     },
     children: [
       {

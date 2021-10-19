@@ -30,12 +30,12 @@ const mutations = {
 
 const actions = {
   // user login
+  // 用户登录
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
       }).catch(error => {
@@ -47,15 +47,12 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getInfo().then(response => {
         const { data } = response
-
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
-        const { roles, name, avatar, introduction } = data
-
+        const { roles, name, img } = data
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
@@ -63,8 +60,11 @@ const actions = {
 
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
+        if (img) {
+          commit('SET_AVATAR', img)
+        } else {
+          commit('SET_AVATAR', '/img.jpg')
+        }
         resolve(data)
       }).catch(error => {
         reject(error)

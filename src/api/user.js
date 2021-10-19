@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-
+// 登录
 export function login(data) {
   return request({
     url: '/api/login/igAuth/login',
@@ -8,17 +8,17 @@ export function login(data) {
   })
 }
 
-export function getInfo(data) {
+// 退出
+export function logout() {
   return request({
-    url: '/api/user/getDetail',
-    method: 'post',
-    data
+    url: '/api/login/logout',
+    method: 'post'
   })
 }
 
-export function logout() {
+export function getInfo() {
   return request({
-    url: '/vue-element-admin/user/logout',
+    url: '/api/user/getAuth',
     method: 'post'
   })
 }
