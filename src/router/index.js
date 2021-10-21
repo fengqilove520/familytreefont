@@ -73,11 +73,12 @@ export const constantRoutes = [
 export const asyncRoutes = [
   {
     path: '/',
-    component: Layout,
+      component: Layout,
     redirect: '/dashboard',
     children: [
       {
         path: 'dashboard',
+        code: '001',
         component: () => import('@/views/dashboard/index'),
         name: '仪表盘',
         meta: { title: '仪表盘', icon: 'dashboard', affix: true }
@@ -88,6 +89,7 @@ export const asyncRoutes = [
     path: '/system',
     component: Layout,
     redirect: 'system/index',
+    code: '002',
     alwaysShow: true, // will always show the root menu
     name: '系统管理',
     meta: {
@@ -98,24 +100,28 @@ export const asyncRoutes = [
       {
         path: 'user',
         component: () => import('@/views/system/user/index'),
+        code: '002001',
         name: '用户列表',
         meta: { title: '用户列表', icon: 'list' }
       },
       {
         path: 'menu',
         component: () => import('@/views/system/menu/index'),
+        code: '002002',
         name: '菜单列表',
         meta: { title: '菜单列表', icon: 'list' }
       },
       {
         path: 'role',
         component: () => import('@/views/system/role/index'),
+        code: '002003',
         name: '角色列表',
         meta: { title: '角色列表', icon: 'list' }
       },
       {
         path: 'dict',
         component: () => import('@/views/system/dict/index'),
+        code: '002004',
         name: '字典列表',
         meta: { title: '字典列表', icon: 'list' }
       }
@@ -124,6 +130,7 @@ export const asyncRoutes = [
   {
     path: '/personManage',
     component: Layout,
+    code: '003',
     redirect: 'personManage/index',
     alwaysShow: true, // will always show the root menu
     name: '人员管理',

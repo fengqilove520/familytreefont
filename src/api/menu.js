@@ -31,3 +31,12 @@ export function del(data) {
     data
   })
 }
+
+// 用户菜单
+export function getMenuListByUser() {
+  return request({
+    url: '/api/menu/getMenuListByUser',
+    method: 'post'
+  })
+}
+

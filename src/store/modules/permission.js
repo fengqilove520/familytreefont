@@ -1,14 +1,19 @@
 import { asyncRoutes, constantRoutes } from '@/router'
+import { getMenuListByUser } from '@/api/menu'
 
+const state = {
+  routes: [],
+  addRoutes: []
+}
 /**
  * 使 meta.role ，以确定当前用户是否具有权限
  * @param roles
  * @param route
  */
-function hasPermission(roles, route) {
-  debugger
-  if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
+function hasPermission(menus, route) {
+  const menuCodes = menus.map(obj => { return obj.code })
+  if (route.code) {
+    return menuCodes.includes(route.code)
   } else {
     return true
   }
@@ -19,26 +24,18 @@ function hasPermission(roles, route) {
  * @param routes asyncRoutes
  * @param roles
  */
-export function filterAsyncRoutes(routes, roles) {
-  debugger
+export function filterAsyncRoutes(routes, menus) {
   const res = []
-
   routes.forEach(route => {
     const tmp = { ...route }
-    if (hasPermission(roles, tmp)) {
+    if (hasPermission(menus, tmp)) {
       if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
+        tmp.children = filterAsyncRoutes(tmp.children, menus)
       }
       res.push(tmp)
     }
   })
-
   return res
-}
-
-const state = {
-  routes: [],
-  addRoutes: []
 }
 
 const mutations = {
@@ -49,16 +46,14 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({ commit }) {
     return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      getMenuListByUser({}).then(res => {
+        const menus = res.data
+        const accessedRoutes = filterAsyncRoutes(asyncRoutes, menus)
+        commit('SET_ROUTES', accessedRoutes)
+        resolve(accessedRoutes)
+      })
     })
   }
 }
