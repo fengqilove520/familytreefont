@@ -148,7 +148,7 @@ export default {
         { class: 'el-icon-edit', name: '编辑' },
         { class: 'el-icon-user', name: '用户' },
         { class: 'el-icon-more', name: '更多' },
-        { class: 'list', name: '列表' }
+        { class: 'el-icon-list', name: '列表' }
       ]
     }
   },

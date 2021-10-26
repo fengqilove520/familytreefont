@@ -59,37 +59,84 @@
     />
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑':'新增'">
       <el-form :model="person" label-width="120px" label-position="right">
-        <el-form-item label="姓名">
-          <el-input v-model="person.name" placeholder="姓名" />
+        <el-form-item label="姓名-辈分">
+          <el-col :span="3">
+          <el-input v-model="person.familyName" placeholder="姓氏" />
+          </el-col>
+          <el-col :span="4">
+          <el-input v-model="person.name" placeholder="名字" />
+          </el-col>
+          <el-col :span="3">
+            <el-input v-model="person.generation" placeholder="辈分" />
+          </el-col>
         </el-form-item>
         <el-form-item label="性别">
           <el-select v-model="person.sex" class="filter-item" filterable clearable placeholder="请选择" @change="getMateOptions">
             <el-option v-for="item in sexOptions" :key="item.code" :label="item.name" :value="+item.code" />
           </el-select>
         </el-form-item>
-        <el-form-item label="户籍地址">
-          <el-input v-model="person.domicilePlace" placeholder="户籍地址" />
-        </el-form-item>
-        <el-form-item label="居住地址">
-          <el-input v-model="person.residentialAddress" placeholder="居住地址" />
-        </el-form-item>
-        <el-form-item label="出生时间">
+        <el-form-item label="在世时间">
           <el-date-picker
             v-model="person.birthTime"
             type="datetime"
             format="yyyy-MM-dd HH:mm:ss"
             value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间"
+            placeholder="请选择出生时间"
           />
-        </el-form-item>
-        <el-form-item label="死亡时间">
+          -
           <el-date-picker
             v-model="person.deathTime"
             type="datetime"
             format="yyyy-MM-dd HH:mm:ss"
             value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间"
+            placeholder="请选择去世时间"
           />
+        </el-form-item>
+        <el-form-item label="户籍地址">
+          <el-col :span="6">
+            <el-select v-model="person.domicileProvince" class="filter-item" filterable clearable placeholder="请选择省" @change="getDomicileCityOptions">
+              <el-option v-for="item in provinceOptions" :key="item.code" :label="item.name" :value="+item.code" />
+            </el-select>
+          </el-col>
+          <el-col :span="6">
+            <el-select v-model="person.domicileCity" class="filter-item" filterable clearable placeholder="请选择市" @change="getDomicileCountyOptions">
+              <el-option v-for="item in domicileCityOptions" :key="item.code" :label="item.name" :value="+item.code" />
+            </el-select>
+          </el-col>
+          <el-col :span="6">
+            <el-select v-model="person.domicileCounty" class="filter-item" filterable clearable placeholder="请选择区/县" @change="getDomicileTownOptions">
+              <el-option v-for="item in domicileCountyOptions" :key="item.code" :label="item.name" :value="+item.code" />
+            </el-select>
+          </el-col>
+          <el-col :span="6">
+            <el-select v-model="person.domicileTown" class="filter-item" filterable clearable placeholder="请选择镇/街道"  >
+              <el-option v-for="item in domicileTownOptions" :key="item.code" :label="item.name" :value="+item.code" />
+            </el-select>
+          </el-col>
+          <el-input v-model="person.domicilePlace" placeholder="户籍地址" />
+        </el-form-item>
+        <el-form-item label="居住地址">
+          <el-col :span="6">
+            <el-select v-model="person.residentialProvince" class="filter-item" filterable clearable placeholder="请选择省" @change="getResidentialCityOptions">
+              <el-option v-for="item in provinceOptions" :key="item.code" :label="item.name" :value="+item.code" />
+            </el-select>
+          </el-col>
+          <el-col :span="6">
+            <el-select v-model="person.residentialCity" class="filter-item" filterable clearable placeholder="请选择市" @change="getResidentialCountyOptions">
+              <el-option v-for="item in residentialCityOptions" :key="item.code" :label="item.name" :value="+item.code" />
+            </el-select>
+          </el-col>
+          <el-col :span="6">
+            <el-select v-model="person.residentialCounty" class="filter-item" filterable clearable placeholder="请选择区/县" @change="getResidentialTownOptions">
+              <el-option v-for="item in residentialCountyOptions" :key="item.code" :label="item.name" :value="+item.code" />
+            </el-select>
+          </el-col>
+          <el-col :span="6">
+            <el-select v-model="person.residentialTown" class="filter-item" filterable clearable placeholder="请选择镇、街道">
+              <el-option v-for="item in residentialTownOptions" :key="item.code" :label="item.name" :value="+item.code" />
+            </el-select>
+          </el-col>
+          <el-input v-model="person.residentialAddress" placeholder="居住地址" />
         </el-form-item>
         <el-form-item label="配偶">
           <el-select v-model="person.mateId" class="filter-item" filterable clearable placeholder="请选择">
@@ -113,6 +160,7 @@
 <script>
 import { getPage, save, del, getList } from '@/api/person'
 import { getCodeListByType } from '@/api/dict'
+import { getProvinceList, getAreaList } from '@/api/area'
 
 export default {
   data() {
@@ -121,6 +169,13 @@ export default {
       parentOptions: [],
       mateOptions: [],
       sexOptions: [],
+      provinceOptions: [],
+      domicileCityOptions: [],
+      residentialCityOptions: [],
+      domicileCountyOptions: [],
+      residentialCountyOptions: [],
+      domicileTownOptions: [],
+      residentialTownOptions: [],
       pageInfo: {
         'pageNum': 1,
         'pageSize': 10
@@ -158,6 +213,7 @@ export default {
       this.dialogType = 'add'
       this.getParentOptions()
       this.getSexes()
+      this.getProvinceList()
     },
     handleEdit(data) {
       this.person = data
@@ -166,6 +222,7 @@ export default {
       this.getParentOptions()
       this.getMateOptions(this.person.sex)
       this.getSexes()
+      this.getProvinceList()
     },
     commitEdit() {
       save(this.person)
@@ -188,9 +245,11 @@ export default {
       const res = await getList(data)
       this.parentOptions = res.data
     },
+    async getProvinceList() {
+      const res = await getProvinceList()
+      this.provinceOptions = res.data
+    },
     async getMateOptions(param) {
-      console.log(param)
-      debugger
       const data = { sex: this.person.sex === 0 ? 1 : 0 }
       const res = await getList(data)
       this.mateOptions = res.data
@@ -199,6 +258,30 @@ export default {
       const data = { type: 'sex' }
       const res = await getCodeListByType(data)
       this.sexOptions = res.data
+    },
+    async getDomicileCityOptions(param) {
+      const res = await getAreaList({ pcode : param })
+      this.domicileCityOptions = res.data
+    },
+    async getDomicileCountyOptions(param) {
+      const res = await getAreaList({ pcode : param })
+      this.domicileCountyOptions = res.data
+    },
+    async getDomicileTownOptions(param) {
+      const res = await getAreaList({ pcode : param })
+      this.domicileTownOptions = res.data
+    },
+    async getResidentialCityOptions(param) {
+      const res = await getAreaList({ pcode : param })
+      this.residentialCityOptions = res.data
+    },
+    async getResidentialCountyOptions(param) {
+      const res = await getAreaList({ pcode : param })
+      this.residentialCountyOptions = res.data
+    },
+    async getResidentialTownOptions(param) {
+      const res = await getAreaList({ pcode : param })
+      this.residentialTownOptions = res.data
     }
   }
 }

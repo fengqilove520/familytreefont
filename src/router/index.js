@@ -128,10 +128,10 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/personManage',
+    path: '/person',
     component: Layout,
     code: '003',
-    redirect: 'personManage/index',
+    redirect: 'person/index',
     alwaysShow: true, // will always show the root menu
     name: '人员管理',
     meta: {
@@ -141,14 +141,14 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/personManage/page'),
+        component: () => import('@/views/person/page'),
         name: '人员列表',
         meta: { title: '人员列表', icon: 'list' },
         roles: ['admin']
       },
       {
         path: 'tree',
-        component: () => import('@/views/personManage/tree'),
+        component: () => import('@/views/person/tree'),
         name: '关系树',
         meta: { title: '关系树', icon: 'list' }
       }
