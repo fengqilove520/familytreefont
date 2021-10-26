@@ -243,7 +243,7 @@ export default {
       this.getPage(Object.assign(this.pageInfo, this.queryParam))
     },
     resetData() {
-      this.dictQueryParam = {}
+      this.queryParam = {}
       this.getList()
     },
     async getParentOptions() {
