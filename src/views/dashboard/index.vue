@@ -70,7 +70,7 @@ export default {
             min: 0,
             max: 1500,
             left: '10%',
-            top: 'bottom',
+            top: 'center',
             text: ['高', '低'],
             calculable: true,
             color: ['#0b50b9', '#c3e2f4']
