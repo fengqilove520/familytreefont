@@ -105,7 +105,7 @@
         <el-form-item label="图标">
           <el-select v-model="menu.icon" class="filter-item" filterable clearable placeholder="请选择">
             <el-option v-for="item in iconOptions" :key="item.class" :value="item.class">
-              <i :class="item.class"></i>
+              <svg-icon :icon-class="item.class" />
             </el-option>
           </el-select>
         </el-form-item>
@@ -144,11 +144,12 @@ export default {
       addRequiredRule: {
       },
       iconOptions: [
-        { class: 'el-icon-setting', name: '设置' },
-        { class: 'el-icon-edit', name: '编辑' },
-        { class: 'el-icon-user', name: '用户' },
-        { class: 'el-icon-more', name: '更多' },
-        { class: 'el-icon-list', name: '列表' }
+        { class: 'peoples' },
+        { class: 'list' },
+        { class: 'tree' },
+        { class: 'table' },
+        { class: 'user' },
+        { class: 'dashboard' }
       ]
     }
   },
