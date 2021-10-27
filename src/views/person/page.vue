@@ -94,49 +94,53 @@
         </el-form-item>
         <el-form-item label="户籍地址">
           <el-col :span="6">
-            <el-select v-model="person.domicileProvince" class="filter-item" filterable clearable placeholder="请选择省" @change="getDomicileCityOptions">
+            <el-select v-model="person.domicileProvince" class="filter-item" filterable clearable placeholder="请选择省">
               <el-option v-for="item in provinceOptions" :key="item.code" :label="item.name" :value="item.code" />
             </el-select>
           </el-col>
-          <el-col :span="6">
-            <el-select v-model="person.domicileCity" class="filter-item" filterable clearable placeholder="请选择市" @change="getDomicileCountyOptions">
-              <el-option v-for="item in domicileCityOptions" :key="item.code" :label="item.name" :value="item.code" />
-            </el-select>
+<!--          <el-col :span="6">-->
+<!--            <el-select v-model="person.domicileCity" class="filter-item" filterable clearable placeholder="请选择市" @change="getDomicileCountyOptions">-->
+<!--              <el-option v-for="item in domicileCityOptions" :key="item.code" :label="item.name" :value="item.code" />-->
+<!--            </el-select>-->
+<!--          </el-col>-->
+<!--          <el-col :span="6">-->
+<!--            <el-select v-model="person.domicileCounty" class="filter-item" filterable clearable placeholder="请选择区/县"  >-->
+<!--              <el-option v-for="item in domicileCountyOptions" :key="item.code" :label="item.name" :value="item.code" />-->
+<!--            </el-select>-->
+<!--          </el-col>-->
+<!--          <el-col :span="6">-->
+<!--            <el-select v-model="person.domicileTown" class="filter-item" filterable clearable placeholder="请选择镇/街道"  >-->
+<!--              <el-option v-for="item in domicileTownOptions" :key="item.code" :label="item.name" :value="item.code" />-->
+<!--            </el-select>-->
+<!--          </el-col>-->
+          <el-col :span="18">
+            <el-input v-model="person.domicilePlace" placeholder="户籍地址" />
           </el-col>
-          <el-col :span="6">
-            <el-select v-model="person.domicileCounty" class="filter-item" filterable clearable placeholder="请选择区/县" @change="getDomicileTownOptions">
-              <el-option v-for="item in domicileCountyOptions" :key="item.code" :label="item.name" :value="item.code" />
-            </el-select>
-          </el-col>
-          <el-col :span="6">
-            <el-select v-model="person.domicileTown" class="filter-item" filterable clearable placeholder="请选择镇/街道"  >
-              <el-option v-for="item in domicileTownOptions" :key="item.code" :label="item.name" :value="item.code" />
-            </el-select>
-          </el-col>
-          <el-input v-model="person.domicilePlace" placeholder="户籍地址" />
         </el-form-item>
         <el-form-item label="居住地址">
           <el-col :span="6">
-            <el-select v-model="person.residentialProvince" class="filter-item" filterable clearable placeholder="请选择省" @change="getResidentialCityOptions">
+            <el-select v-model="person.residentialProvince" class="filter-item" filterable clearable placeholder="请选择省">
               <el-option v-for="item in provinceOptions" :key="item.code" :label="item.name" :value="item.code" />
             </el-select>
           </el-col>
-          <el-col :span="6">
-            <el-select v-model="person.residentialCity" class="filter-item" filterable clearable placeholder="请选择市" @change="getResidentialCountyOptions">
-              <el-option v-for="item in residentialCityOptions" :key="item.code" :label="item.name" :value="item.code" />
-            </el-select>
+<!--          <el-col :span="6">-->
+<!--            <el-select v-model="person.residentialCity" class="filter-item" filterable clearable placeholder="请选择市" @change="getResidentialCountyOptions">-->
+<!--              <el-option v-for="item in residentialCityOptions" :key="item.code" :label="item.name" :value="item.code" />-->
+<!--            </el-select>-->
+<!--          </el-col>-->
+<!--          <el-col :span="6">-->
+<!--            <el-select v-model="person.residentialCounty" class="filter-item" filterable clearable placeholder="请选择区/县" >-->
+<!--              <el-option v-for="item in residentialCountyOptions" :key="item.code" :label="item.name" :value="item.code" />-->
+<!--            </el-select>-->
+<!--          </el-col>-->
+<!--          <el-col :span="6">-->
+<!--            <el-select v-model="person.residentialTown" class="filter-item" filterable clearable placeholder="请选择镇、街道">-->
+<!--              <el-option v-for="item in residentialTownOptions" :key="item.code" :label="item.name" :value="item.code" />-->
+<!--            </el-select>-->
+<!--          </el-col>-->
+          <el-col :span="18">
+            <el-input v-model="person.residentialAddress" placeholder="居住地址" />
           </el-col>
-          <el-col :span="6">
-            <el-select v-model="person.residentialCounty" class="filter-item" filterable clearable placeholder="请选择区/县" @change="getResidentialTownOptions">
-              <el-option v-for="item in residentialCountyOptions" :key="item.code" :label="item.name" :value="item.code" />
-            </el-select>
-          </el-col>
-          <el-col :span="6">
-            <el-select v-model="person.residentialTown" class="filter-item" filterable clearable placeholder="请选择镇、街道">
-              <el-option v-for="item in residentialTownOptions" :key="item.code" :label="item.name" :value="item.code" />
-            </el-select>
-          </el-col>
-          <el-input v-model="person.residentialAddress" placeholder="居住地址" />
         </el-form-item>
         <el-form-item label="配偶">
           <el-select v-model="person.mateId" class="filter-item" filterable clearable placeholder="请选择">
